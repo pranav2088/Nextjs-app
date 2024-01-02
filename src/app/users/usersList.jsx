@@ -39,14 +39,14 @@ export default function UserList() {
     const getData = () => {
         axios.get('/api/users')
             .then(response => {
-                console.log('data', response)
+               
                 setData(response.data)
 
             })
             .catch(err => {
                 console.log("ERROR", err)
             })
-        console.log('Data');
+      
     }
 
     const handleChangePage = (event, newPage) => {
