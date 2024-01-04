@@ -6,11 +6,11 @@ import { query } from '@/lib/db'; // Import your query function from the databas
 
 
 
-async function login(credentials) {
+async function login(credentials:any) {
   try {
    
 
-    const [user] = await query({
+    const [user]:any= await query({
       query: 'SELECT * FROM users WHERE email = ? AND password = ?',
       values: [credentials.email, credentials.password],
     });
@@ -73,16 +73,16 @@ export const options: NextAuthOptions = {
       if (user) {
         token.email = user.email;
         token.id = user.id;
-        token.type = user.type;
+        //token.type = user.type;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
         session.user = {
-          id: token.id,
+          //id: token.id,
           email: token.email,
-          type: token.type,
+          //type: token.type,
           // Add other necessary fields
         };
       }

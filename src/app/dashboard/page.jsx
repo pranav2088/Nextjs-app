@@ -55,7 +55,8 @@ export default function Dashboard() {
         <>
           <div className='grid grid-cols-4 gap-6'>
             <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4 '>
-              <div className="mx-auto  bg-sky-50 rounded-xl shadow-lg hover:scale-105 transition duration-150">
+            
+              <div className="mx-auto  bg-white rounded-xl shadow-lg hover:scale-105 transition duration-150">
                 <div className="flex justify-between">
                   <div className="ml-7 mt-5 text-3xl">
                     <PeopleAltIcon fontSize='large' />
@@ -77,7 +78,7 @@ export default function Dashboard() {
 
             </div>
             <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4 '>
-              <div className="mx-auto  bg-sky-50 rounded-xl shadow-lg hover:scale-105 transition duration-150">
+              <div className="mx-auto  bg-white rounded-xl shadow-lg hover:scale-105 transition duration-150">
                 <div className="flex justify-between">
                   <div className="ml-7 mt-5 text-3xl">
                     <PeopleAltIcon fontSize='large' />
@@ -100,7 +101,7 @@ export default function Dashboard() {
             </div>
 
             <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4 '>
-              <div className="mx-auto  bg-sky-50 rounded-xl shadow-lg hover:scale-105 transition duration-150">
+              <div className="mx-auto  bg-white rounded-xl shadow-lg hover:scale-105 transition duration-150">
                 <div className="flex justify-between">
                   <div className="ml-7 mt-5 text-3xl">
                     <PeopleAltIcon fontSize='large' />
@@ -123,7 +124,7 @@ export default function Dashboard() {
             </div>
 
             <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4 '>
-              <div className="mx-auto  bg-sky-50 rounded-xl shadow-lg hover:scale-105 transition duration-150">
+              <div className="mx-auto  bg-white rounded-xl shadow-lg hover:scale-105 transition duration-150">
                 <div className="flex justify-between">
                   <div className="ml-7 mt-5 text-3xl">
                     <PeopleAltIcon fontSize='large' />
@@ -146,7 +147,7 @@ export default function Dashboard() {
             </div>
 
             <div className='lg:col-span-1 sm:col-span-4 xs:col-span-4'>
-              <div className="mx-auto bg-sky-50 rounded-xl shadow-lg hover:scale-105 transition duration-150">
+              <div className="mx-auto bg-white rounded-xl shadow-lg hover:scale-105 transition duration-150">
                 <div className="flex flex-col items-center">
                   <div className="mt-5 text-3xl">
                     <PeopleAltIcon fontSize='large' />

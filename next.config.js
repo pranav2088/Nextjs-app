@@ -6,7 +6,9 @@ const nextConfig = {
         'MYSQL_DATABASE': 'nextdash-DB',
         'MYSQL_USER': 'root',
         'MYSQL_PASSWORD': 'root',
-    }
+    },
+    distDir: "build", 
+   
 }
 
 module.exports = nextConfig

@@ -1,80 +1,107 @@
 "use client";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import { setCookie, deleteCookie } from "cookies-next";
-
 
 export default function Home() {
   const router = useRouter();
   const { data: session } = useSession();
   const [error, setError] = useState("");
   const [info, setInfo] = useState({ email: "", password: "" });
-  if (session?.user) {
-    let user = session.user;
-  
-    // setCookie("logged", "true", { maxAge: 60 * 60 * 24 * 30 });
+  const [loading, setLoading] = useState(false);
 
-    router.replace('http://localhost:3000/dashboard');
-  }
-  
-  function handleInput(e) {
+  useEffect(() => {
+    // Check if the user is already logged in
+    
+    if (session?.user) {
+      setLoading(true); // Set loading to true when the redirection is initiated
+
+      setTimeout(() => {
+        router.replace('http://localhost:3000/dashboard');
+      }, 2000); // Simulate a delay of 2 seconds (you can adjust this)
+
+      // Clear the loading state after the redirection is complete
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    }
+  }, [session, router]);
+
+  function handleInput (e:any ) {
     setInfo((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
-  
-  async function handlesubmit(e) {
+
+  async function handleSubmit(e:any ) {
     e.preventDefault();
     if (!info.email || !info.password) {
       setError('Provide Credentials');
       return;
     }
-  
+
     try {
-      const res = await signIn('credentials', {
+      const res:any = await signIn('credentials', {
         email: info.email,
         password: info.password,
         redirect: false,
       });
-  
-      if (res.error) {
+
+      if (res?.error) {
         setError('Invalid Credentials');
-        toast.error('Invalid Credentials', { position: toast.POSITION.TOP_RIGHT });
+        toast.error('Invalid Credentials',  
+        { position: toast.POSITION.TOP_RIGHT, 
+          autoClose: 2000,
+          hideProgressBar: true,
+         });;
         return;
       }
-  
-      
+
+      setLoading(true); // Set loading to true when the redirection is initiated
+
+      // Simulate a delay for demonstration purposes (you can remove this in a real scenario)
+      setTimeout(() => {
+        router.replace('http://localhost:3000/dashboard');
+        setLoading(false); // Clear the loading state after the redirection is complete
+      }, 2000); // Set the desired delay time (2 seconds in this example)
+
       // Assuming a successful login
-      toast.success('Login Successful', { position: toast.POSITION.TOP_RIGHT });
+      toast.success('Login Successful', 
+      { position: toast.POSITION.TOP_RIGHT, 
+        autoClose: 2000,
+        hideProgressBar: true,
+       });
     } catch (error) {
       setError('Something went wrong');
-      toast.error('Something went wrong', { position: toast.POSITION.TOP_RIGHT });
+      toast.error('Something went wrong',
+       { position: toast.POSITION.TOP_RIGHT,
+        autoClose: 2000,
+        hideProgressBar: true, });
     }
   }
 
   return (
     <>
-     <ToastContainer />
+     
+      <ToastContainer />
       <div className="flex justify-center mt-16">
+      
         <div style={{ minWidth: "30%" }}>
+        {loading && <div className="loading-line"></div>}
           <div className="shadow-lg flex min-h-full flex-1 flex-col 
-justify-center px-6 py-12 lg:px-8 bg-white">
+            justify-center px-6 py-12 lg:px-8 bg-white">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              {/* <div className="flex justify-center">
-                <Image src="/login.gif" height={70} width={70} />
-              </div> */}
               <h2 className="mt-10 text-center text-2xl font-bold leading-9 
-tracking-tight text-gray-900">
+                tracking-tight text-gray-900">
                 Sign in to your account
               </h2>
             </div>
-
+           
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              <form className="space-y-6" action="#" method="#" onSubmit={handlesubmit}>
+            
+              <form className="space-y-6" action="#" method="#" onSubmit={handleSubmit}>
+             
                 <div>
                   <label
                     htmlFor="email"
@@ -82,8 +109,6 @@ tracking-tight text-gray-900">
                   >
                     Email address
                   </label>
-                 
-                 
                   <div className="mt-2">
                     <input
                       id="email"
@@ -91,10 +116,10 @@ tracking-tight text-gray-900">
                       type="email"
                       autoComplete="email"
                       onChange={(e) => handleInput(e)}
-                      className="block w-full rounded-md border-0 py-1.5 
-text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 
-placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
-focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-2 px-3   
+                        text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 
+                        placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
+                        focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
@@ -123,25 +148,31 @@ focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       type="password"
                       autoComplete="current-password"
                       onChange={(e) => handleInput(e)}
-                      className="block w-full rounded-md border-0 py-1.5 
-text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 p
-laceholder:text-gray-400 focus:ring-2 focus:ring-inset 
-focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      className="block w-full rounded-md border-0 py-2 px-3  
+                        text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 
+                        placeholder:text-gray-400 focus:ring-2 focus:ring-inset 
+                        focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                   </div>
                 </div>
                 <div>
                   <button
-                     
+                    type="submit"
                     className="flex w-full justify-center 
-rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 
-text-white shadow-sm hover:bg-indigo-500 focus-visible:outline 
-focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 
+                      text-white shadow-sm hover:bg-indigo-500 focus-visible:outline 
+                      focus-visible:outline-2 focus-visible:outline-offset-2 
+                      focus-visible:outline-indigo-600"
+                    disabled={loading} // Disable the button when loading is true
                   >
-                    Sign in
+                    {loading ? (
+                      // Show loading spinner or message while the redirection is in progress
+                      <span>Loading...</span>
+                    ) : (
+                      "Sign in"
+                    )}
                   </button>
                 </div>
-                {/* GOOGLE SIGN IN BUTTON */}
                 <div>
                   <button
                     onClick={() => signIn("google")}
@@ -149,9 +180,16 @@ focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ind
 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 
 focus-visible:outline focus-visible:outline-2 
 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+disabled={loading} 
                   >
                     <div className="flex">
-                      Sign in with Google
+                    {loading ? (
+                      // Show loading spinner or message while the redirection is in progress
+                      <span>Loading...</span>
+                    ) : (
+                      " Sign in with Google"
+                    )}
+                     
                       <span className="mx-3">
                         <svg
                           width="24"
@@ -201,12 +239,11 @@ focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                   </button>
                 </div>
               </form>
-
               <p className="mt-10 text-center text-sm text-gray-500">
                 Not a member?{" "}
                 <span
                   className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500 
-cursor-pointer"
+                    cursor-pointer"
                   onClick={() => {
                     router.push("/signup");
                   }}
@@ -214,14 +251,12 @@ cursor-pointer"
                   Register
                 </span>
               </p>
+              
             </div>
+            
           </div>
         </div>
       </div>
-
-
-      
     </>
-
   );
 }
